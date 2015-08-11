@@ -24,7 +24,7 @@ func doServer(c *cli.Context) {
 	}
 	for {
 		time.Sleep(time.Duration(10) * time.Second)
-		fmt.Println(count)
+		fmt.Println("Server count: " + strconv.Itoa(count))
 	}
 }
 
@@ -35,7 +35,6 @@ func listenPort(n int, count *int) {
 		return
 	}
 	defer ln.Close()
-	(*count)++
 
 	for {
 		// wait connection
@@ -44,10 +43,15 @@ func listenPort(n int, count *int) {
 			log.Println(err)
 		}
 		go func(c net.Conn) {
+			(*count)++
 			io.Copy(c, c)
-			fmt.Printf("%#v", c)
-			c.Close()
+			server_close(&c, count)
 		}(conn)
 		time.Sleep(time.Duration(10) * time.Second)
 	}
+}
+
+func server_close(c *net.Conn, count *int) {
+	(*c).Close()
+	(*count)--
 }

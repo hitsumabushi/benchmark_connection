@@ -36,10 +36,15 @@ func doClient(c *cli.Context) {
 
 func connectToHost(p int, host, signature string, count *int) {
 	conn, _ := net.Dial("tcp", host+":"+strconv.Itoa(p))
-	defer conn.Close()
 	(*count)++
+	defer client_close(&conn, count)
 	for {
 		time.Sleep(time.Duration(10) * time.Second)
 		conn.Write([]byte("client[" + signature + "]:" + strconv.Itoa(p)))
 	}
+}
+
+func client_close(c *net.Conn, count *int) {
+	(*c).Close()
+	(*count)--
 }

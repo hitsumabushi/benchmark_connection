@@ -1,7 +1,13 @@
 # benchmark_connection
-benchmark connection limit
+measure limit of the number of concurrent connections
+
+## Limitation
+- Support only IPv4 address
 
 ## How to use
+Firstly, you have to launch a server.
+Then, you run clients.
+These clients try to connect specified server tcp4 socket.
 
 ### Server
 
@@ -13,8 +19,6 @@ benchmark connection limit
 |-----------|--------------|
 | beginport | lower limit of use port |
 | endport   | higher limit of use port |
-
-
 
 ### Client
 

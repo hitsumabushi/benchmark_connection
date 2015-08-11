@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net"
 	"os"
@@ -29,18 +28,25 @@ func doClient(c *cli.Context) {
 		go connectToHost(p, host, signature, &count)
 	}
 	for {
-		time.Sleep(time.Duration(10) * time.Second)
-		fmt.Println("Client Conections: " + strconv.Itoa(count))
+		time.Sleep(time.Duration(Wait) * time.Second)
+		log.Println("client[" + signature + "]:" + strconv.Itoa(count))
 	}
 }
 
 func connectToHost(p int, host, signature string, count *int) {
-	conn, _ := net.Dial("tcp", host+":"+strconv.Itoa(p))
-	(*count)++
-	defer client_close(&conn, count)
 	for {
-		time.Sleep(time.Duration(10) * time.Second)
-		conn.Write([]byte("client[" + signature + "]:" + strconv.Itoa(p)))
+		conn, err := net.Dial("tcp", host+":"+strconv.Itoa(p))
+		if err == nil {
+			(*count)++
+			defer client_close(&conn, count)
+			for {
+				conn.Write([]byte("client[" + signature + "]: " + strconv.Itoa(p)))
+				time.Sleep(time.Duration(Wait) * time.Second)
+			}
+		} else {
+			log.Println("cannot connect :" + host + ":" + strconv.Itoa(p))
+			time.Sleep(time.Duration(Wait) * time.Second)
+		}
 	}
 }
 

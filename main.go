@@ -9,6 +9,7 @@ import (
 
 const (
 	Version = "1.0"
+	Wait    = 10
 )
 
 func main() {

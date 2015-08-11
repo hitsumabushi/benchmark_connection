@@ -23,31 +23,33 @@ func doServer(c *cli.Context) {
 		go listenPort(p, &count)
 	}
 	for {
-		time.Sleep(time.Duration(10) * time.Second)
+		time.Sleep(time.Duration(Wait) * time.Second)
 		fmt.Println("Server count: " + strconv.Itoa(count))
 	}
 }
 
 func listenPort(n int, count *int) {
-	ln, err := net.Listen("tcp4", ":"+strconv.Itoa(n))
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	defer ln.Close()
-
 	for {
-		// wait connection
-		conn, err := ln.Accept()
-		if err != nil {
+		ln, err := net.Listen("tcp4", ":"+strconv.Itoa(n))
+		if err == nil {
+			defer ln.Close()
+			for {
+				// wait connection
+				conn, err := ln.Accept()
+				if err != nil {
+					log.Println(err)
+				}
+				go func(c net.Conn) {
+					(*count)++
+					io.Copy(c, c)
+					server_close(&c, count)
+				}(conn)
+				time.Sleep(time.Duration(Wait) * time.Second)
+			}
+		} else {
 			log.Println(err)
+			time.Sleep(time.Duration(Wait) * time.Second)
 		}
-		go func(c net.Conn) {
-			(*count)++
-			io.Copy(c, c)
-			server_close(&c, count)
-		}(conn)
-		time.Sleep(time.Duration(10) * time.Second)
 	}
 }
 

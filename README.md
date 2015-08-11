@@ -11,9 +11,8 @@ benchmark connection limit
 
 | parameter | explanation  |
 |-----------|--------------|
-| beginport |
-| endport   |
-| host      |
+| beginport | lower limit of use port |
+| endport   | higher limit of use port |
 
 
 
@@ -25,6 +24,6 @@ benchmark connection limit
 
 | parameter | explanation  |
 |-----------|--------------|
-| beginport |
-| endport   |
-| host      |
+| beginport | lower limit of use port |
+| endport   | higher limit of use port |
+| host      | target host IP/FWDN |

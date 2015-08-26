@@ -17,8 +17,8 @@ These clients try to connect specified server tcp4 socket.
 
 | parameter | explanation  |
 |-----------|--------------|
-| beginport | lower limit of use port |
-| endport   | higher limit of use port |
+| beginport | lower limit of number |
+| endport   | higher limit of number |
 
 ### Client
 
@@ -28,6 +28,6 @@ These clients try to connect specified server tcp4 socket.
 
 | parameter | explanation  |
 |-----------|--------------|
-| beginport | lower limit of use port |
-| endport   | higher limit of use port |
+| beginport | lower limit of port |
+| endport   | higher limit of port |
 | host      | target host IP/FQDN |

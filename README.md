@@ -30,4 +30,4 @@ These clients try to connect specified server tcp4 socket.
 |-----------|--------------|
 | beginport | lower limit of use port |
 | endport   | higher limit of use port |
-| host      | target host IP/FWDN |
+| host      | target host IP/FQDN |
